@@ -1,0 +1,15 @@
+language: objective-c
+os: osx
+osx_image:
+  - xcode11.3
+  - xcode11.2
+  - xcode10.3
+before_install:
+  - wget -O bazelisk "https://github.com/bazelbuild/bazelisk/releases/download/v1.2.1/bazelisk-darwin-amd64"
+  - if openssl sha256 -sha256 "bazelisk-darwin-amd64" | grep -q "edeeebb65f4757c802cd7a479fb86622c3de46a0fa313e6bcbc2efdd37a588b3"; then
+      echo "Bazelisk SHA mismatch.";
+      exit 1;
+    fi
+  - chmod +x "bazelisk"
+script:
+  - ./bazelisk test //...
